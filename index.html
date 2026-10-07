@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Garden</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <p class="eyebrow">Stay with it</p>
+      <h1>Focus Garden</h1>
+      <p class="tagline">Tend a plant for five quiet minutes.</p>
+      <div class="meta-row">
+        <div class="counter">Plants grown: <span id="plantsCount">0</span></div>
+        <label class="theme-toggle">
+          <input type="checkbox" id="themeToggle">
+          Dark Mode
+        </label>
+      </div>
+    </header>
+
+    <!-- Countdown display (MM:SS) -->
+    <div class="timer" id="timer" aria-live="polite">05:00</div>
+
+    <!-- Inline SVG plant; stages and wilt are driven by data attributes -->
+    <div class="plant-scene" aria-hidden="true">
+      <svg id="plant" class="plant" viewBox="0 0 200 260" data-stage="0">
+        <!-- Soft ground -->
+        <ellipse cx="100" cy="232" rx="88" ry="16" fill="#c5d5b8"/>
+        <ellipse cx="100" cy="226" rx="62" ry="12" fill="#a8c090"/>
+        <ellipse cx="100" cy="222" rx="40" ry="8" fill="#8fad74"/>
+
+        <!-- Seed (stage 0) -->
+        <ellipse class="part seed" cx="100" cy="214" rx="9" ry="6" fill="#7a5c3e"/>
+
+        <!-- Growing plant grouped so wilt can droop from the soil -->
+        <g class="plant-body">
+          <!-- Sprout stem (stage 1+) -->
+          <path class="part sprout stem" d="M100 214 C100 200 98 188 100 176" fill="none" stroke="#6ea05a" stroke-width="3" stroke-linecap="round"/>
+          <ellipse class="part sprout leaf" cx="112" cy="186" rx="12" ry="6" fill="#7cb86a" transform="rotate(-25 112 186)"/>
+
+          <!-- Small plant extra leaves (stage 2+) -->
+          <path class="part small stem" d="M100 176 C101 158 99 142 100 128" fill="none" stroke="#5d9449" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse class="part small leaf" cx="84" cy="154" rx="16" ry="7" fill="#6fb35a" transform="rotate(28 84 154)"/>
+          <ellipse class="part small leaf" cx="118" cy="140" rx="14" ry="6" fill="#82c46e" transform="rotate(-32 118 140)"/>
+
+          <!-- Big plant (stage 3+) -->
+          <path class="part big stem" d="M100 128 C100 110 102 96 100 82" fill="none" stroke="#4e853c" stroke-width="4" stroke-linecap="round"/>
+          <ellipse class="part big leaf" cx="78" cy="118" rx="20" ry="8" fill="#5ea04a" transform="rotate(18 78 118)"/>
+          <ellipse class="part big leaf" cx="124" cy="104" rx="18" ry="8" fill="#6fb85a" transform="rotate(-22 124 104)"/>
+          <ellipse class="part big leaf" cx="86" cy="92" rx="14" ry="6" fill="#7cc86a" transform="rotate(35 86 92)"/>
+
+          <!-- Bloom flower (stage 4) -->
+          <g class="part bloom">
+            <circle cx="92" cy="68" r="10" fill="#f4b8c8"/>
+            <circle cx="108" cy="68" r="10" fill="#f3a7bc"/>
+            <circle cx="100" cy="56" r="10" fill="#f7c4d0"/>
+            <circle cx="90" cy="80" r="10" fill="#ee9bb3"/>
+            <circle cx="110" cy="80" r="10" fill="#f0a8bd"/>
+            <circle cx="100" cy="70" r="8" fill="#f6e27a"/>
+          </g>
+        </g>
+
+        <!-- Dedicated wilted drawing so Give Up always looks brown and drooped -->
+        <g class="wilt-drawing">
+          <path d="M100 214 C108 188 128 160 142 128" fill="none" stroke="#8d6a3e" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="128" cy="168" rx="16" ry="7" fill="#c4a06a" transform="rotate(55 128 168)"/>
+          <ellipse cx="148" cy="148" rx="18" ry="8" fill="#b08950" transform="rotate(70 148 148)"/>
+          <ellipse cx="136" cy="122" rx="14" ry="6" fill="#c4a06a" transform="rotate(95 136 122)"/>
+          <circle cx="150" cy="118" r="8" fill="#a07a48"/>
+          <circle cx="158" cy="124" r="7" fill="#8d6a3e"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Status: growing, wilted, or Bloomed! -->
+    <p class="status" id="status">Ready when you are.</p>
+
+    <div class="controls">
+      <button type="button" id="startBtn" class="btn primary">Start</button>
+      <button type="button" id="giveUpBtn" class="btn ghost" disabled>Give Up</button>
+    </div>
+
+    <!-- Shortens the session to 10 seconds for quick demos -->
+    <label class="test-mode">
+      <input type="checkbox" id="testMode">
+      Test Mode (10 seconds)
+    </label>
+
+    <!-- Collected blooms from finished sessions -->
+    <section class="garden" aria-labelledby="garden-title">
+      <h2 id="garden-title">My Garden</h2>
+      <div class="garden-row" id="gardenRow">
+        <p class="empty" id="gardenEmpty">Finish a session to plant a flower.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
